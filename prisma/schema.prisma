@@ -1,0 +1,32 @@
+// ORM
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Entidade Pessoa
+model Pessoa {
+  id           Int     @id @default(autoincrement())
+  nome         String
+  idade        Int
+  nomeCompleto String
+  foto         String?
+  presente     Boolean
+  convidada    Boolean
+  anfitriao    Boolean
+  festaId      Int?
+  festa        Festa?  @relation(fields: [festaId], references: [id])
+}
+
+// Entidade Festa
+model Festa {
+  id      Int      @id @default(autoincrement())
+  nome    String
+  data    DateTime
+  pessoas Pessoa[]
+}
